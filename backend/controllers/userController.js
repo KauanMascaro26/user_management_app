@@ -22,6 +22,23 @@ const createUser = (req, res) => {
     );
 };
 
+const getUsers = (req, res) => {
+    db.all(
+        'SELECT * FROM users',
+        [],
+        (err, rows) => {
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            res.status(200).json(rows);
+        }
+    );
+};
+
 module.exports = {
-    createUser
+    createUser,
+    getUsers
 };
