@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input,
+button {
+    padding: 10px;
+}
+
+.user-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 10px;
+}
