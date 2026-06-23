@@ -1,9 +1,47 @@
 const API_URL = 'http://localhost:3000/users';
 
 const form = document.getElementById('user-form');
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const photoPreview = document.getElementById('photo-preview');
 
+
+let photoData = null;
 let editingUserId = null;
 
+document
+    .getElementById('start-camera')
+    .addEventListener('click', async () => {
+
+        const stream =
+            await navigator.mediaDevices.getUserMedia({
+                video: true
+            });
+
+        video.srcObject = stream;
+    });
+
+document
+    .getElementById('capture-photo')
+    .addEventListener('click', () => {
+
+        const context =
+            canvas.getContext('2d');
+
+        context.drawImage(
+            video,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+        photoData =
+            canvas.toDataURL('image/png');
+
+        photoPreview.src = photoData;
+    });
+    
 async function loadUsers() {
 
     const response = await fetch(API_URL);
