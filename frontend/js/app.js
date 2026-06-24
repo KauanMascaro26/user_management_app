@@ -4,6 +4,7 @@ const form = document.getElementById('user-form');
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const photoPreview = document.getElementById('photo-preview');
+const faceStatus = document.getElementById('face-status');
 
 
 let photoData = null;
@@ -19,6 +20,43 @@ document
             });
 
         video.srcObject = stream;
+
+        setInterval(async () => {
+
+        const detection =
+            await faceapi.detectSingleFace(
+                video,
+                new faceapi.TinyFaceDetectorOptions()
+            );
+
+        if (!detection) {
+
+            faceStatus.textContent =
+                '❌ Nenhum rosto detectado';
+
+            return;
+        }
+
+        const width =
+            detection.box.width;
+
+        if (width < 100) {
+
+            faceStatus.textContent =
+                '⚠ Aproxime-se da câmera';
+
+        } else if (width > 220) {
+
+            faceStatus.textContent =
+                '⚠ Afaste-se da câmera';
+
+        } else {
+
+            faceStatus.textContent =
+                '✅ Rosto bem posicionado';
+        }
+
+}, 500);
     });
 
 document
@@ -83,7 +121,7 @@ async function loadUsers() {
 async function deleteUser(id) {
 
     const confirmDelete = confirm(
-        'Are you sure you want to delete this user?'
+        'Você tem certeza que quer excluir esse usuário?'
     );
 
     if (!confirmDelete) {
@@ -155,4 +193,15 @@ form.addEventListener('submit', async (event) => {
     loadUsers();
 });
 
+async function loadFaceApi() {
+
+    await faceapi.nets.tinyFaceDetector.loadFromUri(
+        './models'
+    );
+
+    console.log('Face API Loaded');
+    alert('Face API Loaded');
+}
+
 loadUsers();
+loadFaceApi();
