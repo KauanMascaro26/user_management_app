@@ -143,7 +143,7 @@ Todas as informações cadastradas são armazenadas nesse arquivo.
 ### 1. Clonar o Repositório
 
 ```bash
-git clone <https://github.com/KauanMascaro26/user_management_app.git>
+git clone https://github.com/KauanMascaro26/user_management_app.git
 ```
 
 ---
