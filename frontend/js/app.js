@@ -63,7 +63,12 @@ async function loadUsers() {
                 <h3>${user.name}</h3>
                 <p>${user.email}</p>
 
-                <button onclick="editUser(${user.id}, '${user.name}', '${user.email}')">
+                <button onclick="editUser(
+                    ${user.id},
+                    '${user.name}',
+                    '${user.email}',
+                    \`${user.photo || ''}\`
+                )">
                     Edit
                 </button>
 
@@ -92,10 +97,16 @@ async function deleteUser(id) {
     loadUsers();
 }
 
-function editUser(id, name, email) {
+function editUser(id, name, email, photo) {
 
     document.getElementById('name').value = name;
     document.getElementById('email').value = email;
+
+    photoData = photo;
+
+    if (photo) {
+        photoPreview.src = photo;
+    }
 
     editingUserId = id;
 }
