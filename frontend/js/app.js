@@ -5,14 +5,48 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const photoPreview = document.getElementById('photo-preview');
 const faceStatus = document.getElementById('face-status');
+const captureButton = document.getElementById('capture-photo');
 
+captureButton.disabled = true;
+captureButton.style.cursor = 'not-allowed';
 
 let photoData = null;
 let editingUserId = null;
 
+
+document
+    .getElementById('retake-photo')
+    .addEventListener('click', async () => {
+
+        photoPreview.style.display = 'none';
+
+        video.style.display = 'block';
+
+        photoData = null;
+
+        document.getElementById('retake-photo')
+            .style.display = 'none';
+
+        await startCamera();
+    });
+
+document.getElementById('retake-photo')
+    .style.display = 'none';
+
+async function startCamera() {
+
+    const stream =
+        await navigator.mediaDevices.getUserMedia({
+            video: true
+        });
+
+    video.srcObject = stream;
+}
+
 document
     .getElementById('start-camera')
     .addEventListener('click', async () => {
+
 
         const stream =
             await navigator.mediaDevices.getUserMedia({
@@ -33,6 +67,9 @@ document
 
             faceStatus.textContent =
                 '❌ Nenhum rosto detectado';
+            faceStatus.style.color = 'red';
+            captureButton.disabled = true;
+            captureButton.style.cursor = 'not-allowed';
 
             return;
         }
@@ -44,25 +81,32 @@ document
 
             faceStatus.textContent =
                 '⚠ Aproxime-se da câmera';
+            faceStatus.style.color = '#f39c12';
+            captureButton.disabled = true;
+            captureButton.style.cursor = 'not-allowed';
 
         } else if (width > 220) {
 
             faceStatus.textContent =
                 '⚠ Afaste-se da câmera';
+            faceStatus.style.color = '#f39c12';
+            captureButton.disabled = true;
+            captureButton.style.cursor = 'not-allowed';
 
         } else {
 
             faceStatus.textContent =
                 '✅ Rosto bem posicionado';
+            faceStatus.style.color = 'green';
+            captureButton.disabled = false;
+            captureButton.style.cursor = 'pointer';
         }
-
 }, 500);
     });
 
 document
     .getElementById('capture-photo')
     .addEventListener('click', () => {
-
         const context =
             canvas.getContext('2d');
 
@@ -78,7 +122,20 @@ document
             canvas.toDataURL('image/png');
 
         photoPreview.src = photoData;
+        const stream = video.srcObject;
+
+        if (stream) {
+            stream.getTracks().forEach(track => {
+                track.stop();
+            });
+        }
+        video.style.display = 'none';
+        photoPreview.style.display = 'block';
+
+        document.getElementById('retake-photo')
+            .style.display = 'block';
     });
+
 
 async function loadUsers() {
 
@@ -107,11 +164,11 @@ async function loadUsers() {
                     '${user.email}',
                     \`${user.photo || ''}\`
                 )">
-                    Edit
+                    Editar
                 </button>
 
                 <button onclick="deleteUser(${user.id})">
-                    Delete
+                    Excluir
                 </button>
             </div>
         `;
@@ -153,6 +210,15 @@ form.addEventListener('submit', async (event) => {
 
     event.preventDefault();
 
+    if (!photoData) {
+
+    alert(
+        'É obrigatório capturar uma foto antes de salvar o usuário.'
+    );
+
+    return;
+}
+
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
 
@@ -189,7 +255,7 @@ form.addEventListener('submit', async (event) => {
     }
 
     form.reset();
-
+    photoPreview.src = '';
     loadUsers();
 });
 
@@ -200,8 +266,6 @@ async function loadFaceApi() {
     );
 
     console.log('Face API Loaded');
-    alert('Face API Loaded');
 }
-
 loadUsers();
 loadFaceApi();
