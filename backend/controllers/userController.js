@@ -1,11 +1,11 @@
 const db = require('../database/database');
 
 const createUser = (req, res) => {
-    const { name, email } = req.body;
-
+    const { name, email, photo } = req.body;
+    console.log(photo);
     db.run(
-        'INSERT INTO users (name, email) VALUES (?, ?)',
-        [name, email],
+        'INSERT INTO users (name, email, photo) VALUES (?, ?, ?)',
+        [name, email, photo],
         function (err) {
             if (err) {
                 return res.status(500).json({
@@ -66,11 +66,11 @@ const deleteUser = (req, res) => {
 
 const updateUser = (req, res) => {
     const { id } = req.params;
-    const { name, email } = req.body;
+    const { name, email, photo } = req.body;
 
     db.run(
-        'UPDATE users SET name = ?, email = ? WHERE id = ?',
-        [name, email, id],
+        'UPDATE users SET name = ?, email = ?, photo = ? WHERE id = ?',
+        [name, email, photo, id],
         function (err) {
             if (err) {
                 return res.status(500).json({
