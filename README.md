@@ -4,7 +4,7 @@
 
 Este projeto consiste em uma aplicação web para gerenciamento de usuários, permitindo realizar operações de cadastro, consulta, edição e exclusão de registros.
 
-Além das funcionalidades básicas de CRUD, foi implementado um diferencial utilizando Inteligência Artificial para validação facial em tempo real. Antes de capturar a foto do usuário, o sistema verifica se existe um rosto detectado e se ele está corretamente posicionado em frente à câmera.
+Além das funcionalidades básicas de CRUD, foi implementado um diferencial utilizando Inteligência Artificial para validação facial em tempo real. Antes de fazer a captura foto do usuário, o sistema verifica se existe um rosto detectado e se ele está corretamente posicionado em frente à câmera.
 
 O objetivo foi desenvolver uma solução simples, organizada e de fácil execução, seguindo boas práticas de desenvolvimento e proporcionando uma melhor experiência para o usuário.
 
@@ -143,7 +143,7 @@ Todas as informações cadastradas são armazenadas nesse arquivo.
 ### 1. Clonar o Repositório
 
 ```bash
-git clone <url-do-repositorio>
+git clone <https://github.com/KauanMascaro26/user_management_app.git>
 ```
 
 ---
@@ -237,10 +237,6 @@ A validação facial foi desenvolvida como um diferencial para aumentar a qualid
 ### Captura de Imagem pela Webcam
 
 Foi necessário integrar a API nativa de webcam do navegador para realizar a captura e armazenamento da foto do usuário.
-
-### Validação de Posicionamento Facial
-
-Um dos desafios foi definir critérios para identificar se o usuário estava muito próximo ou muito distante da câmera antes de permitir a captura.
 
 ### Armazenamento da Imagem
 
