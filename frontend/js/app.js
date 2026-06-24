@@ -41,7 +41,7 @@ document
 
         photoPreview.src = photoData;
     });
-    
+
 async function loadUsers() {
 
     const response = await fetch(API_URL);
@@ -55,6 +55,11 @@ async function loadUsers() {
 
         usersList.innerHTML += `
             <div class="user-card">
+            ${
+            user.photo
+                ? `<img src="${user.photo}" width="150">`
+                : ''
+            }
                 <h3>${user.name}</h3>
                 <p>${user.email}</p>
 
@@ -111,7 +116,8 @@ form.addEventListener('submit', async (event) => {
             },
             body: JSON.stringify({
                 name,
-                email
+                email,
+                photo: photoData
             })
         });
 
@@ -126,7 +132,8 @@ form.addEventListener('submit', async (event) => {
             },
             body: JSON.stringify({
                 name,
-                email
+                email,
+                photo: photoData
             })
         });
 
