@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-    max-width: 1300px;;
+    max-width: 1300px;
     margin: auto;
 }
 
@@ -93,12 +93,12 @@ button[type="submit"] {
 }
 
 #start-camera {
-    background: #2ecc71;
+    background: #6d6d6d;
     color: white;
 }
 
 #capture-photo {
-    background: #9b59b6;
+    background: #6d6d6d;
     color: white;
 }
 
@@ -140,7 +140,7 @@ h2 {
 #users-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 30px;
 }
 
 .user-card {
@@ -159,7 +159,8 @@ h2 {
 }
 
 .user-card h3 {
-    color: #344453;
+    margin-top: 0px;
+    color: #ffffff;
 }
 
 h3 {

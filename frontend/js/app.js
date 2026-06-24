@@ -13,7 +13,6 @@ captureButton.style.cursor = 'not-allowed';
 let photoData = null;
 let editingUserId = null;
 
-
 document
     .getElementById('retake-photo')
     .addEventListener('click', async () => {
@@ -47,61 +46,79 @@ document
     .getElementById('start-camera')
     .addEventListener('click', async () => {
 
-
-        const stream =
-            await navigator.mediaDevices.getUserMedia({
-                video: true
-            });
-
-        video.srcObject = stream;
+        photoPreview.style.display = 'none';
+        video.style.display = 'block';
+        
+        await startCamera();
 
         setInterval(async () => {
 
-        const detection =
-            await faceapi.detectSingleFace(
-                video,
-                new faceapi.TinyFaceDetectorOptions()
-            );
+            const detection =
+                await faceapi.detectSingleFace(
+                    video,
+                    new faceapi.TinyFaceDetectorOptions()
+                );
 
-        if (!detection) {
+            if (!detection) {
 
-            faceStatus.textContent =
-                '❌ Nenhum rosto detectado';
-            faceStatus.style.color = 'red';
-            captureButton.disabled = true;
-            captureButton.style.cursor = 'not-allowed';
+                faceStatus.textContent =
+                    'Nenhum rosto detectado';
 
-            return;
-        }
+                faceStatus.style.color = 'red';
 
-        const width =
-            detection.box.width;
+                captureButton.disabled = true;
 
-        if (width < 100) {
+                captureButton.style.cursor =
+                    'not-allowed';
 
-            faceStatus.textContent =
-                '⚠ Aproxime-se da câmera';
-            faceStatus.style.color = '#f39c12';
-            captureButton.disabled = true;
-            captureButton.style.cursor = 'not-allowed';
+                return;
+            }
 
-        } else if (width > 220) {
+            const width =
+                detection.box.width;
 
-            faceStatus.textContent =
-                '⚠ Afaste-se da câmera';
-            faceStatus.style.color = '#f39c12';
-            captureButton.disabled = true;
-            captureButton.style.cursor = 'not-allowed';
+            if (width < 100) {
 
-        } else {
+                faceStatus.textContent =
+                    'Aproxime-se da câmera';
 
-            faceStatus.textContent =
-                '✅ Rosto bem posicionado';
-            faceStatus.style.color = 'green';
-            captureButton.disabled = false;
-            captureButton.style.cursor = 'pointer';
-        }
-}, 500);
+                faceStatus.style.color =
+                    '#f39c12';
+
+                captureButton.disabled = true;
+
+                captureButton.style.cursor =
+                    'not-allowed';
+
+            } else if (width > 220) {
+
+                faceStatus.textContent =
+                    'Afaste-se da câmera';
+
+                faceStatus.style.color =
+                    '#f39c12';
+
+                captureButton.disabled = true;
+
+                captureButton.style.cursor =
+                    'not-allowed';
+
+            } else {
+
+                faceStatus.textContent =
+                    'Rosto bem posicionado';
+
+                faceStatus.style.color =
+                    'green';
+
+                captureButton.disabled = false;
+
+                captureButton.style.cursor =
+                    'pointer';
+            }
+
+        }, 500);
+
     });
 
 document
@@ -121,7 +138,11 @@ document
         photoData =
             canvas.toDataURL('image/png');
 
-        photoPreview.src = photoData;
+        photoPreview.src = '';
+
+        setTimeout(() => {
+            photoPreview.src = photoData;
+        }, 10);
         const stream = video.srcObject;
 
         if (stream) {
@@ -201,7 +222,9 @@ function editUser(id, name, email, photo) {
 
     if (photo) {
         photoPreview.src = photo;
-    }
+        photoPreview.style.display = 'block';
+        video.style.display = 'none';
+}
 
     editingUserId = id;
 }
