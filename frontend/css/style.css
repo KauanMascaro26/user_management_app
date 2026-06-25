@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', sans-serif;
-    background: #ffffff;
+    background: #202020;
     padding: 30px;
 }
 
@@ -40,7 +40,7 @@ body {
 
 .right-panel {
     flex: 1;
-    background: rgb(255, 255, 255);
+    background: #202020;
     padding: 30px;
     border-radius: 10px;
 }
@@ -58,18 +58,23 @@ form {
 }
 
 input {
+    background-color: #202020;
     padding: 15px;
-    border: 1px solid #dcdde1;
+    border: 1px solid #464646;
     border-radius: 10px;
     font-size: 15px;
+    caret-color: #ffffff;
+    color: white;
 }
 
 input:focus {
     outline: none;
-    border-color: #ffffff;
+    border-color: #3f3f3f;
 }
 
 button {
+    background: #6d6d6d;
+    color: white;
     border: none;
     border-radius: 10px;
     padding: 12px;
@@ -115,7 +120,7 @@ button[type="submit"] {
     width: 320px;
     height: 240px;
     border-radius: 12px;
-    border: 3px solid #e5e7eb;
+    border: 3px solid #464646;
     margin-bottom: 20px;
 }
 
@@ -144,10 +149,8 @@ h2 {
 }
 
 .user-card {
-    background: white;
     border-radius: 15px;
     padding: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
 .user-card img {
@@ -197,16 +200,18 @@ p {
 hr {
     margin: 40px 0;
     border: none;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #464646;
 }
 
 @media (max-width: 900px) {
+    
 
     .top-section {
         flex-direction: column;
     }
 
     .left-panel {
+        
         text-align: center;
     }
 
